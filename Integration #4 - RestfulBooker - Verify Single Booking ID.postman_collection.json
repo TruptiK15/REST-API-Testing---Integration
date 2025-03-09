@@ -1,0 +1,134 @@
+{
+	"info": {
+		"_postman_id": "af34ea2d-c49e-4bf7-b88e-2146acd50f9f",
+		"name": "Integration #4 - RestfulBooker - Verify Single Booking ID",
+		"description": "1. Get All booking ID - store the 1st booking id in environment variable\n    \n2. Verify the 1st booking id",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40693101",
+		"_collection_link": "https://www.postman.com/truptkmi15/workspace/my-workspace/collection/40693101-af34ea2d-c49e-4bf7-b88e-2146acd50f9f?action=share&source=collection_link&creator=40693101"
+	},
+	"item": [
+		{
+			"name": "Step 1 - Get All Booking IDs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Parse the JSON response\r",
+							"let allbookingids = pm.response.json();\r",
+							"\r",
+							"// Pick the first booking ID from the list (or random if you prefer)\r",
+							"let firstbookingid = allbookingids[0].bookingid;\r",
+							"\r",
+							"// Save bookingId into environment variable\r",
+							"pm.environment.set(\"firstbookingid\",firstbookingid);\r",
+							"console.log(\"Stored Bookingid: \",firstbookingid);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/booking",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"booking"
+					]
+				},
+				"description": "Generated from cURL: curl -i https://restful-booker.herokuapp.com/booking\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Step 2 - Verify Single Booking ID",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log(\"Before making the POST request\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(\"After making the POST request\");\r",
+							"\r",
+							"//Test cases are written here\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/booking/{{firstbookingid}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"booking",
+						"{{firstbookingid}}"
+					]
+				},
+				"description": "Generated from cURL: curl -i https://restful-booker.herokuapp.com/booking/1\r\n"
+			},
+			"response": []
+		}
+	]
+}
